@@ -12,32 +12,31 @@ app.use(express.json());
 
 app.listen(PORT, () => console.log('Listening at port: ' + PORT));
 
+app.use('/pawstel/:id', express.static(path.join(__dirname, '../public')));
 
 app.get('/api/listings/:listingId', (req, res) => {
-
   db.getListingById(req.params, (err, result) => {
     if (err) {
       res.status(500).send({ err: `Server oopsie ${err}` });
     } else if (result.length === 0) {
-      res.status(404).send('No such listing')
+      res.status(404).send('No such listing');
     } else {
       db.getReviewsByListingId(result[0].review_id, (err, reviews) => {
         if (err) {
-          res.status(500).send({err: `Server oopsie ${err}`})
+          res.status(500).send({ err: `Server oopsie ${err}` });
         } else {
           result[0].reviews = reviews[0];
           res.send(result[0]);
         }
-      })
+      });
     }
   });
-
 });
 
 app.get('/api/dates/:listingId', (req, res) => {
   // TODO: refactor using router
   let method = db.getBookedDatesByListingId;
-  let data = null; 
+  let data = null;
 
   if (req.query.targetDate) {
     method = db.getFirstBookedDateAfterTarget;
@@ -57,8 +56,6 @@ app.get('/api/dates/:listingId', (req, res) => {
   });
 
 });
-
-
 
 app.post('/api/reservations/new', (req, res) => {
   // TODO: find more elegant implementation that ensures atomicity
