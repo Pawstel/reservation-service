@@ -8,7 +8,8 @@
     "lint": "eslint **/*.js **/*.jsx",
     "delint": "eslint --fix **/*.js **/**/*.jsx",
     "start": "nodemon server/server.js",
-    "build": "webpack -d --watch"
+    "build": "webpack -d --watch",
+    "db": "bash database_creation.sh"
   },
   "repository": {
     "type": "git",
@@ -41,8 +42,13 @@
   },
   "dependencies": {
     "babel-plugin-syntax-async-functions": "^6.13.0",
+    "csv-file-creator": "^1.0.8",
+    "csv-write-stream": "^2.0.0",
     "express": "^4.16.3",
+    "faker": "^4.1.0",
+    "fs": "0.0.1-security",
     "mysql": "^2.16.0",
+    "pg": "^7.4.3",
     "react": "^16.4.1",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.1"
