@@ -11,7 +11,7 @@ const lastNames = ['Farrell\'s', 'DuBuque\'s', 'Kiehn\'s', 'Swaniawski\'s', 'Mar
 
 const locations = ['Ashy Pawstel', 'Black Pawstel', 'Blue Pawstel', 'Gray Pawstel', 'Green Pawstel', 'Icy Pawstel', 'Lemon Pawstel', 'Mango Pawstel', 'Orange Pawstel', 'Purple Pawstel', 'Red Pawstel', 'Salmon Pawstel', 'White Pawstel', 'Yellow Pawstel', 'Agreeable Pawstel', 'Ambitious Pawstel', 'Brave Pawstel', 'Calm Pawstel', 'Delightful Pawstel', 'Eager Pawstel', 'Faithful Pawstel', 'Gentle Pawstel', 'Happy Pawstel', 'Jolly Pawstel', 'Kind Pawstel', 'Lively Pawstel', 'Nice Pawstel', 'Obedient Pawstel', 'Polite Pawstel', 'Proud Pawstel', 'Silly Pawstel', 'Thankful Pawstel', 'Victorious Pawstel', 'Witty Pawstel', 'Wonderful Pawstel', 'Zealous Pawstel', 'Big Pawstel', 'Colossal Pawstel', 'Fat Pawstel', 'Gigantic Pawstel', 'Great Pawstel', 'Huge Pawstel', 'Immense Pawstel', 'Large Pawstel', 'Little Pawstel', 'Mammoth Pawstel', 'Massive Pawstel', 'Microscopic Pawstel', 'Miniature Pawstel', 'Petite Pawstel', 'Puny Pawstel', 'Scrawny Pawstel', 'Short Pawstel', 'Small Pawstel', 'Tall Pawstel', 'Teeny Pawstel', 'Tiny Pawstel', 'Ancient Pawstel', 'Brief Pawstel', 'Early Pawstel', 'Fast Pawstel', 'Futuristic Pawstel', 'Late Pawstel', 'Long Pawstel', 'Modern Pawstel', 'Old Pawstel', 'Old-fashioned Pawstel', 'Prehistoric Pawstel', 'Quick Pawstel', 'Rapid Pawstel', 'Short Pawstel', 'Slow Pawstel', 'Swift Pawstel', 'Young Pawstel', 'Breezy Pawstel', 'Cool Pawstel', 'Cuddly Pawstel', 'Damp Pawstel', 'Fluffy Pawstel', 'Warm Pawstel', 'Wooden Pawstel', 'Acidic Pawstel', 'Bitter Pawstel', 'Cool Pawstel', 'Creamy Pawstel', 'Delicious Pawstel', 'Disgusting Pawstel', 'Fresh Pawstel', 'Greasy Pawstel', 'Juicy Pawstel', 'Hot Pawstel', 'Moldy Pawstel', 'Nutritious Pawstel', 'Nutty Pawstel', 'Putrid Pawstel', 'Rancid Pawstel', 'Ripe Pawstel', 'Rotten Pawstel', 'Salty Pawstel', 'Savory Pawstel'];
 
-const createCSV = (fileName) => {
+const createCSV = () => {
   // fileName = fileName || 'data.csv';
   // writer.pipe(fs.createWriteStream(fileName));
   // for (let i = 0; i < 10000000; i += 1) {
@@ -28,7 +28,15 @@ const createCSV = (fileName) => {
     for (let j = 0; j < firstNames.length; j += 1) {
       for (let k = 0; k < lastNames.length; k += 1) {
         for (let l = 0; l < 50; l += 1) {
-          console.log(`${prefixes[i]} ${firstNames[j]} ${lastNames[k]} ${locations[l]}`);
+          const randHost = Math.ceil(Math.random() * 10000000);
+          const randUser = Math.ceil(Math.random() * 10000000);
+          const randStay = Math.ceil(Math.random() * 10);
+          const randViews = 100 + Math.ceil(Math.random() * 500);
+          const randGuests = 1 + Math.ceil(Math.random() * 5);
+          const randFees = 2 + Math.ceil(Math.random() * 8);
+          const randTax = Math.ceil(Math.random() * 10);
+          const randRate = 60 + Math.ceil(Math.random() * 100);
+          console.log(`${prefixes[i]} ${firstNames[j]} ${lastNames[k]} ${locations[l]}, ${randHost}, ${randUser}, ${randViews}, ${randStay}, ${randGuests}, ${randFees}, ${randTax}, ${randRate}`);
         }
       }
     }
