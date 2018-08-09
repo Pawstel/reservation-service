@@ -8,7 +8,6 @@ const db = mysql.createConnection({
   database: 'reservation',
 });
 
-
 const getListingById = ({ listingId }, callback) => {
   const queryStr = `SELECT * from listings WHERE id = ?`;
   db.query(queryStr, listingId, callback);

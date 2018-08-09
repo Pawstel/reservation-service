@@ -15,6 +15,12 @@ app.listen(PORT, () => console.log('Listening at port: ' + PORT));
 app.use('/pawstel/:id', express.static(path.join(__dirname, '../public')));
 
 app.get('/api/listings/:listingId', (req, res) => {
+  db.generateTenMillion((err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log('Success!');
+  });
   db.getListingById(req.params, (err, result) => {
     if (err) {
       res.status(500).send({ err: `Server oopsie ${err}` });
