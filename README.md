@@ -49,3 +49,28 @@ npm run build
 npm start
 ```
 
+## API
+
+To make a GET request for all listings:
+
+```sh
+curl -H "Content-Type: application/json" -X GET -d '{"listingId":"1234567"}' http://localhost:3003/api/listings/:listingId
+```
+
+To make a POST request for a new reservation to the database:
+
+```sh
+curl -H "Content-Type: application/json" -X POST -d '{"guest_id":"184", "booked_dates_id":"763", "total_adults":"1", "total_pups":"5", "total_charge":"117.54"}' http://localhost:3003/api/reservations/new
+```
+
+To make a PUT request to change an existing database entry(reservation):
+
+```sh
+curl -H "Content-Type: application/json" -X PUT -d '{"listingId":"20183", "rate":"135.99"}' http://localhost:3003/api/reservations/:reservationId/update
+```
+
+To make a DELETE request to remove and existing entry in the database (cancelling a reservation):
+
+```sh
+curl -H "Content-Type: application/json" -X DELETE -d '{"reservationId":"2018"}' http://localhost:3003/api/reservations/:reservationId/delete
+```
