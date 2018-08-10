@@ -72,7 +72,7 @@ app.post('/api/reservations/new', (req, res) => {
   });
 });
 
-app.put('/api/reservations/update', (req, res) => {
+app.put('/api/reservations/:reservationId/update', (req, res) => {
   // client sends the appropriate reservation id to the server
   // database queries the reservation based on the reservation id
   // in the callback of the query, have a update(?) function so that
@@ -81,7 +81,7 @@ app.put('/api/reservations/update', (req, res) => {
   res.send('Put request received');
 });
 
-app.delete('/api/reservations/delete', (req, res) => {
+app.delete('/api/reservations/:reservationId/delete', (req, res) => {
   // client sends the appropriate reservation id to the server
   // database deletes the appropriate entry based on the id
   res.send('Your reservation has been deleted');
