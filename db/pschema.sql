@@ -22,7 +22,7 @@ CREATE TABLE reviews (
 );
 
 CREATE TABLE listings (
-  id SERIAL PRIMARY KEY,
+  id integer PRIMARY KEY,
   listing_name text NOT NULL,
   host_id integer REFERENCES hosts(id),
   review_id integer REFERENCES reviews(id),
@@ -37,8 +37,8 @@ CREATE TABLE listings (
 CREATE TABLE booked_dates (
   id SERIAL PRIMARY KEY,
   listing_id integer REFERENCES listings(id), 
-  check_in DATE NOT NULL,
-  check_out DATE NOT NULL
+  check_in text NOT NULL,
+  check_out text NOT NULL
 );
 
 CREATE TABLE reservations (
@@ -48,12 +48,12 @@ CREATE TABLE reservations (
   total_adults integer NOT NULL,
   total_pups integer DEFAULT 0,
   total_charge integer NOT NULL, 
-  created_at DATE DEFAULT CURRENT_TIMESTAMP
+  created_at text DEFAULT CURRENT_TIMESTAMP
 );
 
 COPY users(username) FROM '/Users/nilsgudbranson 1/desktop/SDC/reservation-service/db/CSV/users/data.csv' DELIMITERS ',' CSV;
 COPY hosts(user_id) FROM '/Users/nilsgudbranson 1/desktop/SDC/reservation-service/db/CSV/hosts/data.csv' DELIMITERS ',' CSV;
 COPY reviews(total_reviews, avg_rating) FROM '/Users/nilsgudbranson 1/desktop/SDC/reservation-service/db/CSV/reviews/data.csv' DELIMITERS ',' CSV;
-COPY listings(listing_name, host_id, review_id, weekly_views, min_stay, max_guests, fees, tax_rate, rate) FROM '/Users/nilsgudbranson 1/desktop/SDC/reservation-service/db/CSV/listings/combine.csv' DELIMITERS ',' CSV;
+COPY listings(id, listing_name, host_id, review_id, weekly_views, min_stay, max_guests, fees, tax_rate, rate) FROM '/Users/nilsgudbranson 1/desktop/SDC/reservation-service/db/CSV/listings/combine.csv' DELIMITERS ',' CSV;
 COPY booked_dates(listing_id, check_in, check_out) FROM '/Users/nilsgudbranson 1/desktop/SDC/reservation-service/db/CSV/booked_dates/data.csv' DELIMITERS ',' CSV;
 COPY reservations(guest_id, booked_dates_id, total_adults, total_pups, total_charge, created_at) FROM '/Users/nilsgudbranson 1/desktop/SDC/reservation-service/db/CSV/reservations/data.csv' DELIMITERS ',' CSV;
