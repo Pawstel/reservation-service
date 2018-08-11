@@ -3,8 +3,7 @@ const createCSV = () => {
     const randId = Math.ceil(Math.random() * 10000000);
     const randMonth = Math.ceil(Math.random() * 12);
     const randDay = Math.ceil(Math.random() * 28);
-    const randYearEnd = 18 + Math.ceil(Math.random() * 81);
-    const randYear = '20' + randYearEnd;
+    const randYear = '2018';
     const randDuration = Math.ceil(Math.random() * 6);
     const checkIn = createDate(randYear, randMonth, randDay);
     const checkOut = createDate(randYear, randMonth, randDay + randDuration);
@@ -13,7 +12,7 @@ const createCSV = () => {
 };
 
 const createDate = (year, month, day) => {
-  let date = '' + year;
+  let date = year;
   date = (month >= 10) ? date + '-' + month + '-' : date + '-0' + month + '-';
   if (month === 2 && day > 22) {
     date += (day - 6);
