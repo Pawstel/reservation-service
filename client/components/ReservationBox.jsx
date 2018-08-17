@@ -24,7 +24,7 @@ class ReservationBox extends React.Component {
         idParam = parseInt(locSplit[i + 1]);
       }
     }
-    if (typeof(idParam) === 'number' && (idParam > 0 && idParam < 10000001)) {
+    if (typeof(idParam) === 'number' && (idParam > 0)) {
       const url = `http://localhost:3003/api/listings/${idParam}`;
       fetch(url)
       .then(res => res.json())

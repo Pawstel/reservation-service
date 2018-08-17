@@ -37,8 +37,8 @@ CREATE TABLE listings (
 CREATE TABLE booked_dates (
   id SERIAL PRIMARY KEY,
   listing_id integer REFERENCES listings(id), 
-  check_in text NOT NULL,
-  check_out text NOT NULL
+  check_in DATE NOT NULL,
+  check_out DATE NOT NULL
 );
 
 CREATE TABLE reservations (
