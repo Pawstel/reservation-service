@@ -8,12 +8,20 @@ class DatePicker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-    	showPanel: false,
-    	dateInView: this.props.checkInDate || new Date(),
-    	unavailableDates: [],
-    	reservations: [],
-      firsBookingAfterCheckIn: null
+      showPanel: false,
+      dateInView: this.props.checkInDate || new Date(),
+      unavailableDates: [],
+      reservations: [],
+      firsBookingAfterCheckIn: null,
+      hasError: false,
     };
+  }
+
+  componentDidCatch(error, info) {
+    console.log('hits');
+    this.setState({
+      hasError: true,
+    });
   }
 
   componentDidMount() {
@@ -68,9 +76,13 @@ class DatePicker extends React.Component {
     let url = `/api/dates/${this.props.listingId}?month=${year}-${month+1}`;
 
     fetch(url)
-    .then(res => res.json())
-    .then((res) => this.setState({ reservations: res}, this.setUnavailableDates))
-    .catch(err => console.log(err))
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      this.setState({ reservations: res }, this.setUnavailableDates);
+    })
+    .catch(err => console.log(err));
   }
 
   getFirstUnavailableDateAfterCheckIn() {
@@ -144,6 +156,9 @@ class DatePicker extends React.Component {
 
 
   render() {
+    if (this.state.hasError) {
+      return <h1>Something went wrong</h1>;
+    }
     return (
       <div>
         <button
