@@ -1,0 +1,20 @@
+config:
+  target: "http://localhost:3003"
+  phases:
+    - duration: 60
+      arrivalRate: 40
+  variables:
+    listingIds:
+      - [1, 12, 123, 1234, 12345, 123456, 1234567, 10000000, 20, 200, 2018, 29456, 281936, 60826, 5967880, 999999, 7777, 8452615]
+    dates:
+      - ["2018-01", "2018-02", "2018-03", "2018-04", "2018-05", "2018-06", "2018-07", "2018-08", "2018-09", "2018-10", "2018-11"]
+scenarios:
+  - flow:
+    - loop:
+      - get:
+          url: "/api/listings/{{ $loopElement }}"
+      over: listingIds
+    - loop:
+      - get:
+          url: "/api/dates/3?month={{ $loopElement }}"
+      over: dates

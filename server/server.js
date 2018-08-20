@@ -6,7 +6,7 @@ const redis = require('redis');
 const db = require('../db/db.js');
 const utils = require('./utils.js');
 const PORT = 3003;
-const client = redis.createClient();
+const client = redis.createClient('6379', 'redis');
 
 const app = express();
 
@@ -113,11 +113,31 @@ app.put('/api/reservations/:reservationId/update', (req, res) => {
   // in the callback of the query, have a update(?) function so that
   // whatever the information that was changed client-side is
   // updated in the database
-  res.send('Put request received');
+  const data = utils.parseBookedDates(req.body);
+  db.updateReservation(data, (err, result) => {
+    if (err) {
+      res.status(500).send({ err: 'Failed to update reservation' });
+    } else {
+      res.send('Put request received');
+    }
+  });
 });
 
 app.delete('/api/reservations/:reservationId/delete', (req, res) => {
   // client sends the appropriate reservation id to the server
   // database deletes the appropriate entry based on the id
-  res.send('Your reservation has been cancelled');
+  const data = req.body.reservationId;
+  db.deleteReservation(data, (err, result) => {
+    if (err) {
+      res.status(500).send({ err: 'Failed to delete booked dates, please try again' });
+    } else {
+      db.deleteReservationTable(data, (error, data) => {
+        if (err) {
+          res.status(500).send({ err: 'Failed to delete reservation, please try again' });
+        } else {
+          res.send('Your reservation has been cancelled');
+        }
+      })
+    }
+  });
 });

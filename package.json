@@ -7,7 +7,7 @@
     "test": "jest",
     "lint": "eslint **/*.js **/*.jsx",
     "delint": "eslint --fix **/*.js **/**/*.jsx",
-    "start": "NODE_ENV=production node-pm server/server.js",
+    "start": "NODE_ENV=production node server/server.js",
     "build": "webpack -d --watch",
     "db": "bash database_creation.sh"
   },
