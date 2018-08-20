@@ -18,7 +18,7 @@ const initOptions = {
 const pgp = require('pg-promise')(initOptions);
 
 const connection = {
-  host: process.env.RDS_HOSTNAME || 'localhost',
+  host: 'database',
   user: process.env.RDS_USERNAME || 'reservation_user',
   password: process.env.RDS_PASSWORD || 'root',
   database: 'reservation',
@@ -76,30 +76,65 @@ const getFirstBookedDateAfterTarget = ([listingId, year, month, date], callback)
     });
 };
 
-// const postNewBookedDates = (data, callback) => {
-//   const queryStr = `INSERT INTO booked_dates (listing_id, check_in, check_out) VALUES (?)`;
-//   pool.query(queryStr, [data.listingId, data.checkIn, data.checkOut], callback);
-// };
+const postNewBookedDates = (data, callback) => {
+  const queryStr = `INSERT INTO booked_dates (listing_id, check_in, check_out) VALUES (?)`;
+  pool.query(queryStr, [data.listingId, data.checkIn, data.checkOut], callback);
+};
 
-// const postNewReservation = ({ guestId, bookedDatesId, guests, total }, callback) => {
-//   const queryStr = `INSERT INTO reservations`
-//     + `(guest_id, booked_dates_id, total_adults, total_children, total_infants, total_charge) VALUES (?)`;
-//   const values = [guestId, bookedDatesId, guests.adults, guests.children, guests.total, total];
-//   pool.query(queryStr, [values], callback);
-// };
+const postNewReservation = ({ guestId, bookedDatesId, guests, total }, callback) => {
+  const queryStr = `INSERT INTO reservations`
+    + `(guest_id, booked_dates_id, total_adults, total_children, total_infants, total_charge) VALUES (?)`;
+  const values = [guestId, bookedDatesId, guests.adults, guests.children, guests.total, total];
+  pool.query(queryStr, [values], callback);
+};
 
-// const deleteBookedDatesById = ({ listingId }, callback) => {
-//   const queryStr = `DELETE FROM booked_dates WHERE id = ?`;
-//   pool.query(queryStr, listingId, callback);
-// };
+const deleteBookedDatesById = ({ listingId }, callback) => {
+  const queryStr = `DELETE FROM booked_dates WHERE id = ?`;
+  pool.query(queryStr, listingId, callback);
+};
 
+const updateReservation = (data, callback) => {
+  const queryStr = `UPDATE booked_dates SET check = $2, check_out = $3 WHERE id = $1`;
+  db.any(queryStr, [data.listingId, data.check_in, data.check_out])
+    .then((data) => {
+      callback(null, data);
+    })
+    .catch((error) => {
+      callback(error, null);
+    });
+};
+
+const deleteReservation = (data, callback) => {
+  const queryStr = `DELETE FROM booked_dates WHERE id = $1`;
+  db.any(queryStr, data)
+    .then((data) => {
+      callback(null, data);
+    })
+    .catch((error) => {
+      callback(error, null);
+    });
+};
+
+const deleteReservationTable = (data, callback) => {
+  const queryStr = `DELETE FROM reservations WHERE id = $1`;
+  db.any(queryStr, data)
+    .then((data) => {
+      callback(null, data);
+    })
+    .catch((error) => {
+      callback(error, null);
+    });
+};
 
 module.exports = {
   getListingById,
   getReviewsByListingId,
   getBookedDatesByListingId,
   getFirstBookedDateAfterTarget,
-  // postNewBookedDates,
-  // postNewReservation,
-  // deleteBookedDatesById,
+  updateReservation,
+  deleteReservation,
+  postNewBookedDates,
+  postNewReservation,
+  deleteBookedDatesById,
+  deleteReservationTable,
 };
